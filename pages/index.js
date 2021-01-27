@@ -1,65 +1,78 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useRef } from "react";
+import jsPDF from "jspdf";
+import styles from "../styles/Home.module.css";
+import "../components/Calibri Regular-normal";
 
 export default function Home() {
+  const ref = useRef();
+
+  const onClick = () => {
+    let doc = new jsPDF({
+      unit: "px",
+      format: "a4",
+      putOnlyUsedFonts: true,
+      floatPrecision: 16,
+      hotfixes: ["px_scaling"],
+      // filename: "Test.pdf",
+      filters: ["ASCIIHexEncode"],
+    });
+
+    doc
+      .html(ref.current, {
+        filename: "test",
+        // fontFaces: [
+        //   {
+        //     family: "Calibri Regular",
+        //     style: "normal",
+        //     // weight: "normal",
+        //     // stretch: "normal",
+        //     src: ["/fonts/Calibri Regular.ttf"],
+        //   },
+        // ],
+        x: 5,
+        y: 5,
+      })
+      .output("pdfobjectnewwindow");
+  };
+
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <button onClick={onClick} className={styles.btn}>
+        PDF
+      </button>
+      <div
+        ref={ref}
+        style={{ width: "90%", margin: 15, fontFamily: "Calibri Regular" }}
+      >
+        <div>
+          <h1>English</h1>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum
+          </p>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        <div>
+          <h1>Georgian</h1>
+          <p>
+            Lorem Ipsum საბეჭდი და ტიპოგრაფიული ინდუსტრიის უშინაარსო ტექსტია.
+            იგი სტანდარტად 1500-იანი წლებიდან იქცა, როდესაც უცნობმა მბეჭდავმა
+            ამწყობ დაზგაზე წიგნის საცდელი ეგზემპლარი დაბეჭდა. მისი ტექსტი
+            არამარტო 5 საუკუნის მანძილზე შემორჩა, არამედ მან დღემდე, ელექტრონული
+            ტიპოგრაფიის დრომდეც უცვლელად მოაღწია. განსაკუთრებული პოპულარობა მას
+            1960-იან წლებში გამოსულმა Letraset-ის ცნობილმა ტრაფარეტებმა მოუტანა,
+            უფრო მოგვიანებით კი — Aldus PageMaker-ის ტიპის საგამომცემლო
+            პროგრამებმა, რომლებშიც Lorem Ipsum-ის სხვადასხვა ვერსიები იყო
+            ჩაშენებული.
+          </p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
